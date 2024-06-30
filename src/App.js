@@ -24,7 +24,7 @@ function App() {
 
   const generateCustomCard = () => {
     const newCard = generateRandomCardStats();
-    newCard.customText = customText;
+    newCard.cardName = customText;
     newCard.customSprite = customImage;
     setCard(newCard);
   };
@@ -42,7 +42,7 @@ function App() {
       toPng(cardRef.current)
         .then((dataUrl) => {
           const link = document.createElement('a');
-          link.download = 'card.png';
+          link.download = card.cardName+".png" || "card.png";
           link.href = dataUrl;
           link.click();
         })
