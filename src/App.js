@@ -4,7 +4,7 @@ import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
 
 function App() {
   const [card, setCard] = useState(null);
-  const [isCustom, setIsCustom] = useState(false);
+  const [isCustom, setIsCustom] = useState(true);
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
 
@@ -36,15 +36,19 @@ function App() {
       <div className="mb-8 flex">
         <button
           onClick={() => setIsCustom(true)}
-          className="mr-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+          className={`mr-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 ${
+            isCustom ? 'border-4 border-double border-black' : ''
+          }`}
         >
-          Create Custom Card
+          Custom Card
         </button>
         <button
           onClick={() => setIsCustom(false)}
-          className="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
+          className={`px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 ${
+            !isCustom ? 'border-4 border-double border-black' : ''
+          }`}
         >
-          Generate Default Card
+          Default Card
         </button>
       </div>
 
@@ -75,7 +79,7 @@ function App() {
           onClick={generateDefaultCard}
           className="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
         >
-          Generate Default Card
+          Generate New Default Card
         </button>
       )}
 
