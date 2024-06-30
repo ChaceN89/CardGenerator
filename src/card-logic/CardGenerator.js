@@ -1,7 +1,7 @@
 import { Card, AbilityRarity } from './Card';
 import { GlobalCardStats } from './GlobalCardStats';
 
-function generateRandomCard() {
+function generateRandomCardStats() {
   const card = new Card();
 
   card.Accuracy = getRandomInt(GlobalCardStats.MinAccuracy, GlobalCardStats.MaxAccuracy + 1);
@@ -101,4 +101,4 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export default generateRandomCard;
+export default generateRandomCardStats;
