@@ -83,7 +83,7 @@ function App() {
             isCustom ? 'border-4 border-double border-black' : ''
           }`}
         >
-          Use Custom Card
+          Custom Cards
         </button>
         <button
           onClick={() => setIsCustom(false)}
@@ -91,7 +91,7 @@ function App() {
             !isCustom ? 'border-4 border-double border-black' : ''
           }`}
         >
-          Use Default Card
+          Default Cards
         </button>
       </div>
 
@@ -100,7 +100,7 @@ function App() {
           <input
             id="file-upload"
             type="file"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/jpg"
             onChange={handleImageUpload}
           />
           <input
@@ -108,7 +108,7 @@ function App() {
             placeholder="Enter Card Name"
             value={customText}
             onChange={handleCustomTextChange}
-            className="mb-4 p-2 border rounded-md"
+            className="mb-4 p-2 border rounded-md mr-1"
           />
           <button
             onClick={generateCustomCard}
@@ -122,22 +122,22 @@ function App() {
           onClick={generateDefaultCard}
           className="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 mb-10"
         >
-          Generate New Default Card
+          Generate Card
         </button>
       )}
 
       {card && (
         <div>
-          <div ref={cardRef} className="card p-6 rounded-lg shadow-lg w-80 bg-slate-100 border-2 border-black">
-            <h2 className="text-xl font-bold mb-4 text-center">
+          <div ref={cardRef} className="card p-4 rounded-lg shadow-lg w-80 bg-slate-100 border-2 border-black">
+            <h2 className="text-xl font-bold mb-2 text-center">
               {card.cardName || "Generated Card!"}
             </h2>
             {card.customSprite ? (
-              <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
+              <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4 mx-auto h-56 w-full object-contain" />
             ) : (
-              <img src={card.cardSprite} alt="Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
+              <img src={card.cardSprite} alt="Card Sprite" className="mb-4 mx-auto h-56 w-full object-contain" />
             )}
-            <div className="flex justify-around items-center mb-4 text-xl">
+            <div className="flex justify-around items-center mb-2 text-xl">
               <div className="flex items-center">
                 <FaBullseye className="mr-1 text-red-500" /> {card.Accuracy}
               </div>
@@ -147,14 +147,15 @@ function App() {
               <div className="flex items-center">
                 <FaShieldAlt className="mr-1 text-blue-500" /> {card.Damage}
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center health-stat">
                 <FaHeart className="mr-1 text-red-500" /> {card.HealthPoints}
               </div>
             </div>
-            <h3 className="text-lg font-bold mb-2">Ability:</h3>
-            <p className="mb-2"><strong>If:</strong> {card.Trigger}</p>
-            <p className="mb-2"><strong>Then:</strong> {card.Effect}</p>
+            <h3 className="font-bold mb-1">Ability:</h3>
+            <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
+            <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
           </div>
+
           <div className="mt-4 flex gap-1 justify-between w-80">
             <button
               onClick={downloadCardImage}
