@@ -73,7 +73,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
       <Toaster />
 
       <div className="mb-8 flex">
@@ -127,8 +127,8 @@ function App() {
       )}
 
       {card && (
-        <div>
-          <div ref={cardRef} className="card p-4 rounded-lg shadow-lg w-80 bg-slate-100 border-2 border-black">
+        <div className="flex flex-col items-center">
+          <div ref={cardRef} className="card py-4 rounded-lg shadow-lg w-72 bg-slate-100 border-2 border-black">
             <h2 className="text-xl font-bold mb-2 text-center">
               {card.cardName || "Generated Card!"}
             </h2>
@@ -139,21 +139,23 @@ function App() {
             )}
             <div className="flex justify-around items-center mb-2 text-xl">
               <div className="flex items-center">
-                <FaBullseye className="mr-1 text-red-500" /> {card.Accuracy}
+                <FaBullseye className="mr-0.5 text-red-500" /> {card.Accuracy}
               </div>
               <div className="flex items-center">
-                <LuSword className="mr-1 text-gray-500" /> {card.Retaliation}
+                <LuSword className="mr-0.5 text-gray-500" /> {card.Retaliation}
               </div>
               <div className="flex items-center">
-                <FaShieldAlt className="mr-1 text-blue-500" /> {card.Damage}
+                <FaShieldAlt className="mr-0.5 text-blue-500" /> {card.Damage}
               </div>
-              <div className="flex items-center health-stat">
-                <FaHeart className="mr-1 text-red-500" /> {card.HealthPoints}
+              <div className="flex items-center">
+                <FaHeart className="mr-0.5 text-red-500" /> {card.HealthPoints}
               </div>
             </div>
-            <h3 className="font-bold mb-1">Ability:</h3>
-            <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
-            <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
+            <div className="flex flex-col justify-around items-center mb-2 text-xl">
+              <h3 className="font-bold mb-1">Ability:</h3>
+              <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
+              <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
+            </div>
           </div>
 
           <div className="mt-4 flex gap-1 justify-between w-80">
