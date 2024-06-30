@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaBullseye, FaShieldAlt, FaHeart } from 'react-icons/fa';
+import { LuSword } from "react-icons/lu";
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
 
@@ -32,7 +34,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-red-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <div className="mb-8 flex">
         <button
           onClick={() => setIsCustom(true)}
@@ -40,7 +42,7 @@ function App() {
             isCustom ? 'border-4 border-double border-black' : ''
           }`}
         >
-          Custom Card
+          Use Custom Card
         </button>
         <button
           onClick={() => setIsCustom(false)}
@@ -48,7 +50,7 @@ function App() {
             !isCustom ? 'border-4 border-double border-black' : ''
           }`}
         >
-          Default Card
+          Use Default Card
         </button>
       </div>
 
@@ -62,7 +64,7 @@ function App() {
           />
           <input
             type="text"
-            placeholder="Enter custom text"
+            placeholder="Enter Card Name"
             value={customText}
             onChange={handleCustomTextChange}
             className="mb-4 p-2 border rounded-md"
@@ -77,7 +79,7 @@ function App() {
       ) : (
         <button
           onClick={generateDefaultCard}
-          className="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
+          className="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 mb-10"
         >
           Generate New Default Card
         </button>
@@ -85,22 +87,32 @@ function App() {
 
       {card && (
         <div className="card bg-white p-6 rounded-lg shadow-lg w-80">
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="text-xl font-bold mb-4 text-center">
             {card.cardName || "Generated Card!"}
           </h2>
           {card.customSprite ? (
-            <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4" />
+            <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
           ) : (
-            <img src={card.cardSprite} alt="Card Sprite" className="mb-4" />
+            <img src={card.cardSprite} alt="Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
           )}
-          <p className="mb-2"><strong>Custom Text:</strong> {card.customText}</p>
-          <p className="mb-2"><strong>Accuracy:</strong> {card.Accuracy}</p>
-          <p className="mb-2"><strong>Retaliation:</strong> {card.Retaliation}</p>
-          <p className="mb-2"><strong>Damage:</strong> {card.Damage}</p>
-          <p className="mb-2"><strong>Health Points:</strong> {card.HealthPoints}</p>
-          <p className="mb-2"><strong>Rarity:</strong> {card.abilityRarity}</p>
-          <p className="mb-2"><strong>Trigger:</strong> {card.Trigger}</p>
-          <p className="mb-2"><strong>Effect:</strong> {card.Effect}</p>
+
+          <div className="flex justify-around items-center mb-4 text-xl">
+            <div className="flex items-center">
+              <FaBullseye className="mr-1 text-red-500" /> {card.Accuracy}
+            </div>
+            <div className="flex items-center">
+              <LuSword className="mr-1 text-gray-500" /> {card.Retaliation}
+            </div>
+            <div className="flex items-center">
+              <FaShieldAlt className="mr-1 text-blue-500" /> {card.Damage}
+            </div>
+            <div className="flex items-center">
+              <FaHeart className="mr-1 text-red-500" /> {card.HealthPoints}
+            </div>
+          </div>
+          <h3 className="text-lg font-bold mb-2">Ability:</h3>
+          <p className="mb-2"><strong>If:</strong> {card.Trigger}</p>
+          <p className="mb-2"><strong>Then:</strong> {card.Effect}</p>
         </div>
       )}
     </div>
