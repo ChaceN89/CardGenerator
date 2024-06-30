@@ -4,7 +4,8 @@ import { LuSword } from 'react-icons/lu';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
 import { toPng } from 'html-to-image';
-import clipboard from 'clipboard';
+
+import { toast, Toaster } from 'react-hot-toast';
 
 function App() {
   const [card, setCard] = useState(null);
@@ -55,12 +56,17 @@ function App() {
     if (cardRef.current) {
       toPng(cardRef.current)
         .then((dataUrl) => {
-          clipboard.writeText(dataUrl)
-            .then(() => {
-              alert('Image copied to clipboard!');
-            })
-            .catch((error) => {
-              console.error('Oops, something went wrong!', error);
+          fetch(dataUrl)
+            .then(res => res.blob())
+            .then(blob => {
+              const item = new ClipboardItem({ 'image/png': blob });
+              navigator.clipboard.write([item])
+                .then(() => {
+                  toast.success('Image copied to clipboard!');
+                })
+                .catch((error) => {
+                  console.error('Oops, something went wrong!', error);
+                });
             });
         });
     }
@@ -68,6 +74,8 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <Toaster />
+
       <div className="mb-8 flex">
         <button
           onClick={() => setIsCustom(true)}
@@ -94,9 +102,7 @@ function App() {
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
-
           />
-
           <input
             type="text"
             placeholder="Enter Card Name"
@@ -122,7 +128,7 @@ function App() {
 
       {card && (
         <div>
-          <div ref={cardRef} className="card bg-white p-6 rounded-lg shadow-lg w-80">
+          <div ref={cardRef} className="card p-6 rounded-lg shadow-lg w-80 bg-slate-100 border-2 border-black">
             <h2 className="text-xl font-bold mb-4 text-center">
               {card.cardName || "Generated Card!"}
             </h2>
