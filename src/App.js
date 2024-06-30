@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FaBullseye, FaShieldAlt, FaHeart } from 'react-icons/fa';
-import { LuSword } from "react-icons/lu";
+import { LuSword } from 'react-icons/lu';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
+import { toPng } from 'html-to-image';
+import clipboard from 'clipboard';
 
 function App() {
   const [card, setCard] = useState(null);
   const [isCustom, setIsCustom] = useState(true);
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
+  const cardRef = useRef();
 
   const handleImageUpload = (e) => {
     setCustomImage(URL.createObjectURL(e.target.files[0]));
@@ -31,6 +34,36 @@ function App() {
     newCard.cardName = defaultCard.name;
     newCard.cardSprite = `${process.env.PUBLIC_URL}/cardImages/${defaultCard.filePath}`;
     setCard(newCard);
+  };
+
+  const downloadCardImage = () => {
+    if (cardRef.current) {
+      toPng(cardRef.current)
+        .then((dataUrl) => {
+          const link = document.createElement('a');
+          link.download = 'card.png';
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Oops, something went wrong!', error);
+        });
+    }
+  };
+
+  const copyCardImageToClipboard = () => {
+    if (cardRef.current) {
+      toPng(cardRef.current)
+        .then((dataUrl) => {
+          clipboard.writeText(dataUrl)
+            .then(() => {
+              alert('Image copied to clipboard!');
+            })
+            .catch((error) => {
+              console.error('Oops, something went wrong!', error);
+            });
+        });
+    }
   };
 
   return (
@@ -57,11 +90,13 @@ function App() {
       {isCustom ? (
         <div className="mb-8">
           <input
+            id="file-upload"
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
-            className="mb-4"
+
           />
+
           <input
             type="text"
             placeholder="Enter Card Name"
@@ -86,33 +121,48 @@ function App() {
       )}
 
       {card && (
-        <div className="card bg-white p-6 rounded-lg shadow-lg w-80">
-          <h2 className="text-xl font-bold mb-4 text-center">
-            {card.cardName || "Generated Card!"}
-          </h2>
-          {card.customSprite ? (
-            <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
-          ) : (
-            <img src={card.cardSprite} alt="Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
-          )}
-
-          <div className="flex justify-around items-center mb-4 text-xl">
-            <div className="flex items-center">
-              <FaBullseye className="mr-1 text-red-500" /> {card.Accuracy}
+        <div>
+          <div ref={cardRef} className="card bg-white p-6 rounded-lg shadow-lg w-80">
+            <h2 className="text-xl font-bold mb-4 text-center">
+              {card.cardName || "Generated Card!"}
+            </h2>
+            {card.customSprite ? (
+              <img src={card.customSprite} alt="Custom Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
+            ) : (
+              <img src={card.cardSprite} alt="Card Sprite" className="mb-4 mx-auto max-h-96 object-contain" />
+            )}
+            <div className="flex justify-around items-center mb-4 text-xl">
+              <div className="flex items-center">
+                <FaBullseye className="mr-1 text-red-500" /> {card.Accuracy}
+              </div>
+              <div className="flex items-center">
+                <LuSword className="mr-1 text-gray-500" /> {card.Retaliation}
+              </div>
+              <div className="flex items-center">
+                <FaShieldAlt className="mr-1 text-blue-500" /> {card.Damage}
+              </div>
+              <div className="flex items-center">
+                <FaHeart className="mr-1 text-red-500" /> {card.HealthPoints}
+              </div>
             </div>
-            <div className="flex items-center">
-              <LuSword className="mr-1 text-gray-500" /> {card.Retaliation}
-            </div>
-            <div className="flex items-center">
-              <FaShieldAlt className="mr-1 text-blue-500" /> {card.Damage}
-            </div>
-            <div className="flex items-center">
-              <FaHeart className="mr-1 text-red-500" /> {card.HealthPoints}
-            </div>
+            <h3 className="text-lg font-bold mb-2">Ability:</h3>
+            <p className="mb-2"><strong>If:</strong> {card.Trigger}</p>
+            <p className="mb-2"><strong>Then:</strong> {card.Effect}</p>
           </div>
-          <h3 className="text-lg font-bold mb-2">Ability:</h3>
-          <p className="mb-2"><strong>If:</strong> {card.Trigger}</p>
-          <p className="mb-2"><strong>Then:</strong> {card.Effect}</p>
+          <div className="mt-4 flex gap-1 justify-between w-80">
+            <button
+              onClick={downloadCardImage}
+              className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+            >
+              Download Image
+            </button>
+            <button
+              onClick={copyCardImageToClipboard}
+              className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+            >
+              Copy to Clipboard
+            </button>
+          </div>
         </div>
       )}
     </div>
