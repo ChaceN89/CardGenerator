@@ -15,13 +15,13 @@ export class Card {
 }
 
 
-
-//  the default stats 
-export const GlobalCardStats = {
+//  the default stats that a card can have and the max points that can be distributed 
+export const globalCardStats = {
   health:[1,5],
   damage:[1,4],
   defense:[1,4],
-  accuracy:[1,5]
+  accuracy:[1,5],
+  maxPoints:12
 };
 
 
