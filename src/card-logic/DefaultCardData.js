@@ -9,15 +9,15 @@ export function generateRandomDefaultCard() {
 const defaultCards = [
   {
     names: ["Bush", "Tree", "Plant", "Shrub"],
-    files: ["card1.png", "card1-alt1.png", "card1-alt2.png"]
+    files: ["card1.png","card1.png","card1.png", "card1-alt1.png", "card1-alt2.png"]
   },
   {
     names: ["Angel", "Halo", "Heavenly", "Divine"],
-    files: ["card2.png", "card2-alt1.png", "card2-alt2.png"]
+    files: ["card2.png","card2.png","card2.png", "card2-alt1.png", "card2-alt2.png"]
   },
   {
     names: ["Water Thing", "Ocean", "Lake", "River"],
-    files: ["card3.png", "card3-alt1.png", "card3-alt2.png", "card3-alt3.png"]
+    files: ["card3.png", "card3.png", "card3.png","card3-alt1.png", "card3-alt2.png", "card3-alt3.png"]
   },
   {
     names: ["Squid", "Cephalopod", "Tentacles", "Ink"],

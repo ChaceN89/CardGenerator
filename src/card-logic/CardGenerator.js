@@ -17,7 +17,7 @@ function generateRandomCardStats() {
   const triggerEffect = generateRandomTriggerEffect();
   card.Trigger = triggerEffect.trigger;
   card.Effect = triggerEffect.effect;
-  card.abilityRarity = triggerEffect.rarity;
+  card.rarity = triggerEffect.rarity;
 
   return card;
 }

@@ -17,11 +17,10 @@ export class Card {
 
 //  the default stats that a card can have and the max points that can be distributed 
 export const globalCardStats = {
-  health:[1,5],
+  health:[2,5],
   damage:[1,4],
-  defense:[1,4],
+  defense:[2,4],
   accuracy:[1,5],
-  maxPoints:12
 };
 
 
@@ -29,7 +28,7 @@ export const globalCardStats = {
 export const triggersAndEffects = [
   {
     weight: '0.8',
-    rarity: "common",
+    rarity: "Common",
     trigger: "This card dies (not banished)",
     effects: [
       { name: "banish one card any other player owns", weight: 0.1 },
@@ -40,8 +39,8 @@ export const triggersAndEffects = [
     ],
   },
   {
-    weight: '0.5',
-    rarity: "uncommon",
+    weight: '0.4',
+    rarity: "Uncommon",
     trigger: "You activate this ability in place of this card's attack in the combat phase",
     effects: [
       { name: "Deal 1 DMG to one card on the field you choose (Can't reduce below 1 HP)", weight: 0.3 },
@@ -51,8 +50,8 @@ export const triggersAndEffects = [
     ],
   },
   {
-    weight: '0.2',
-    rarity: "rare",
+    weight: '0.1',
+    rarity: "Rare",
     trigger: "You sacrifice 1 LP at the start of your turn in prep phase",
     effects: [
       { name: "You immediately create a new card, but its stats become 5/4/4/5", weight: 0.1 },

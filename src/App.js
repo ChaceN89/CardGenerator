@@ -4,7 +4,6 @@ import { LuSword } from 'react-icons/lu';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
 import { toPng } from 'html-to-image';
-
 import { toast, Toaster } from 'react-hot-toast';
 
 function App() {
@@ -12,6 +11,7 @@ function App() {
   const [isCustom, setIsCustom] = useState(true);
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const cardRef = useRef();
 
   const handleImageUpload = (e) => {
@@ -42,7 +42,7 @@ function App() {
       toPng(cardRef.current)
         .then((dataUrl) => {
           const link = document.createElement('a');
-          link.download = card.cardName+".png" || "card.png";
+          link.download = card.cardName + ".png" || "card.png";
           link.href = dataUrl;
           link.click();
         })
@@ -92,6 +92,12 @@ function App() {
           }`}
         >
           Default Cards
+        </button>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="ml-4 px-6 py-2 bg-yellow-600 text-white font-semibold rounded-md shadow-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-75"
+        >
+          Info
         </button>
       </div>
 
@@ -152,7 +158,7 @@ function App() {
               </div>
             </div>
             <div className="flex flex-col justify-around items-center mb-2 text-xl">
-              <h3 className="font-bold mb-1">Ability:</h3>
+              <h4 className="font-bold mb-1">Ability: <i className='font-normal'>{card.rarity}</i></h4>
               <div>
                 <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
                 <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
@@ -176,6 +182,31 @@ function App() {
           </div>
         </div>
       )}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6  sm:max-w-lg md:max-w-xl w-full">
+            <h2 className="text-xl font-bold mb-4 text-center">Card Information</h2>
+            <p className="mb-2 text-center">You can choose your own card name and upload custom art or you can use default ones.</p>
+            <ul className="list-disc list-inside">
+              <li><strong>Health:</strong> Determines the HP of the card. When this reaches zero, your card is destroyed, and your overall life is decreased by one.</li>
+              <li><strong>Damage:</strong> Determines the attack strength of the card. This is the damage done to an opponent's card when you win a fight.</li>
+              <li><strong>Defense:</strong> Determines the defensive strength of the card. This stat indicates how many slots on the roulette wheel you have when being attacked.</li>
+              <li><strong>Accuracy:</strong> Indicates how many slots on the roulette wheel you have when attacking, determining the likelihood of successful attacks.</li>
+              <li><strong>Trigger:</strong> The condition under which the card's ability activates.</li>
+              <li><strong>Effect:</strong> The result of the card's ability when the trigger condition is met.</li>
+            </ul>
+            <p className="mt-4 text-center">When a card is attacked, the attacker's accuracy is compared to the defender's defense. A roulette wheel is used to determine the winner, with the weights of accuracy and defense influencing the outcome. So if your attack is higher than the defenders defense you have a much higher chance of winning the fight.</p>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 w-full"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
