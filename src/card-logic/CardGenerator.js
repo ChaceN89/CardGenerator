@@ -1,102 +1,68 @@
-import { Card, AbilityRarity } from './Card';
-import { GlobalCardStats } from './GlobalCardStats';
+import { Card, GlobalCardStats, triggersAndEffects } from './CardStats';
 
+/**
+ * Generates random card stats and assigns a random trigger and effect based on the card's rarity.
+ * @returns {Card} - The generated card with random stats, trigger, and effect.
+ */
 function generateRandomCardStats() {
   const card = new Card();
 
-  card.Accuracy = getRandomInt(GlobalCardStats.MinAccuracy, GlobalCardStats.MaxAccuracy + 1);
-  card.Retaliation = getRandomInt(GlobalCardStats.MinRetaliation, GlobalCardStats.MaxRetaliation + 1);
-  card.Damage = getRandomInt(GlobalCardStats.MinDamage, GlobalCardStats.MaxDamage + 1);
-  card.HealthPoints = getRandomInt(GlobalCardStats.MinHealthPoints, GlobalCardStats.MaxHealthPoints + 1);
+  // Assign random stats to the card within the defined ranges
+  card.Accuracy = getRandomInt(GlobalCardStats.accuracy[0], GlobalCardStats.accuracy[1] + 1);
+  card.Retaliation = getRandomInt(GlobalCardStats.defense[0], GlobalCardStats.defense[1] + 1);
+  card.Damage = getRandomInt(GlobalCardStats.damage[0], GlobalCardStats.damage[1] + 1);
+  card.HealthPoints = getRandomInt(GlobalCardStats.health[0], GlobalCardStats.health[1] + 1);
 
-  card.abilityRarity = generateRandomRarity();
-
-  card.Trigger = generateRandomTrigger(card);
-  card.Effect = generateRandomEffect(card);
+  // Generate a random trigger and effect
+  const triggerEffect = generateRandomTriggerEffect();
+  card.Trigger = triggerEffect.trigger;
+  card.Effect = triggerEffect.effect;
+  card.abilityRarity = triggerEffect.rarity;
 
   return card;
 }
 
-function generateRandomRarity() {
-  const rarityWeights = {
-    [AbilityRarity.Common]: GlobalCardStats.CommonChance,
-    [AbilityRarity.Uncommon]: GlobalCardStats.UncommonChance,
-    [AbilityRarity.Rare]: GlobalCardStats.RareChance
-  };
+/**
+ * Generates a random trigger and effect based on their weights.
+ * @returns {Object} - An object containing the selected trigger, effect, and rarity.
+ */
+function generateRandomTriggerEffect() {
+  // Select a random trigger based on weights
+  const trigger = getRandomElementWithWeight(triggersAndEffects);
+  
+  // Select a random effect from the chosen trigger's effects based on weights
+  const effect = getRandomElementWithWeight(trigger.effects);
 
-  const totalWeight = Object.values(rarityWeights).reduce((acc, weight) => acc + weight, 0);
-  const randomValue = getRandomInt(0, totalWeight);
+  return { trigger: trigger.trigger, effect: effect.name, rarity: trigger.rarity };
+}
+
+/**
+ * Selects a random element from an array based on their weights.
+ * @param {Array} elements - The array of elements to choose from.
+ * @returns {Object} - The selected element.
+ */
+function getRandomElementWithWeight(elements) {
+  const totalWeight = elements.reduce((acc, element) => acc + parseFloat(element.weight), 0);
+  const randomValue = Math.random() * totalWeight;
   let cumulativeWeight = 0;
 
-  for (const [rarity, weight] of Object.entries(rarityWeights)) {
-    cumulativeWeight += weight;
+  // Select an element based on the random value
+  for (const element of elements) {
+    cumulativeWeight += parseFloat(element.weight);
     if (randomValue < cumulativeWeight) {
-      return rarity;
+      return element;
     }
   }
 
-  return AbilityRarity.Common;
+  return elements[0]; // Fallback to the first element if no element is selected
 }
 
-function generateRandomTrigger(card) {
-  if (card.abilityRarity === AbilityRarity.Common) {
-    return getRandomTextWithWeight(GlobalCardStats.CommonTriggers);
-  } else if (card.abilityRarity === AbilityRarity.Uncommon) {
-    return getRandomTextWithWeight(GlobalCardStats.UncommonTriggers);
-  } else if (card.abilityRarity === AbilityRarity.Rare) {
-    return getRandomTextWithWeight(GlobalCardStats.RareTriggers);
-  }
-  return "";
-}
-
-function generateRandomEffect(card) {
-  let result = "";
-  if (card.abilityRarity === AbilityRarity.Common) {
-    result = getRandomTextWithWeight(GlobalCardStats.CommonEffects);
-  } else if (card.abilityRarity === AbilityRarity.Uncommon) {
-    result = getRandomTextWithWeight(GlobalCardStats.UncommonEffects);
-  } else if (card.abilityRarity === AbilityRarity.Rare) {
-    result = getRandomTextWithWeight(GlobalCardStats.RareEffects);
-  }
-
-  result = result.trim();
-  let loopCount = 0;
-
-  while ([GlobalCardStats.RollCommon, GlobalCardStats.RollUnCommon, GlobalCardStats.RollRare].includes(result)) {
-    loopCount++;
-    if (loopCount >= 2000) {
-      console.log("Infinite Loop");
-      break;
-    }
-    if (result === GlobalCardStats.RollCommon) {
-      console.log(`Rolled Common`);
-      result = getRandomTextWithWeight(GlobalCardStats.CommonEffects);
-    } else if (result === GlobalCardStats.RollUnCommon) {
-      console.log(`Rolled UnCommon`);
-      result = getRandomTextWithWeight(GlobalCardStats.UncommonEffects);
-    } else if (result === GlobalCardStats.RollRare) {
-      console.log(`Rolled Rare`);
-      result = getRandomTextWithWeight(GlobalCardStats.RareEffects);
-    }
-  }
-
-  return result;
-}
-
-function getRandomTextWithWeight(textAndWeight) {
-  const texts = [];
-  textAndWeight.forEach(tw => {
-    for (let i = 0; i < tw.Weight; i++) {
-      texts.push(tw.Text);
-    }
-  });
-  return getRandomElement(texts);
-}
-
-function getRandomElement(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
+/**
+ * Generates a random integer between the specified min (inclusive) and max (exclusive).
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @returns {number} - The generated random integer.
+ */
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }

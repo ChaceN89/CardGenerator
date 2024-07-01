@@ -73,7 +73,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-200 p-4">
       <Toaster />
 
       <div className="mb-8 flex">
@@ -128,7 +128,7 @@ function App() {
 
       {card && (
         <div className="flex flex-col items-center">
-          <div ref={cardRef} className="card py-4 rounded-lg shadow-lg w-72 bg-slate-100 border-2 border-black">
+          <div ref={cardRef} className="card py-4 px-2 rounded-lg shadow-lg w-72 bg-slate-100 border-2 border-black">
             <h2 className="text-xl font-bold mb-2 text-center">
               {card.cardName || "Generated Card!"}
             </h2>
@@ -153,8 +153,10 @@ function App() {
             </div>
             <div className="flex flex-col justify-around items-center mb-2 text-xl">
               <h3 className="font-bold mb-1">Ability:</h3>
-              <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
-              <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
+              <div>
+                <p className="mb-1 text-sm"><strong>If:</strong> {card.Trigger}</p>
+                <p className="mb-1 text-sm"><strong>Then:</strong> {card.Effect}</p>
+              </div>
             </div>
           </div>
 
