@@ -6,6 +6,7 @@ const Button = ({ onClick, children, color, className = '', isActive = false }) 
     blue: 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
     green: 'bg-green-600 hover:bg-green-700 focus:ring-green-500',
     yellow: 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500',
+    red: 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
   };
   const activeStyles = isActive ? 'border-4 border-double border-black' : '';
 

@@ -1,21 +1,22 @@
-import { Card, globalCardStats, usePointDistributionSystem } from './CardStats';
+import { Card } from './CardStats';
 import { triggersAndEffects } from './TriggersAndEffect';
 
 /**
  * Generates random card stats and assigns a random trigger and effect based on the card's rarity.
+ * @param {Object} globalCardStats - The global card stats.
+ * @param {boolean} usePointDistributionSystem - Flag to use the point distribution system.
  * @returns {Card} - The generated card with random stats, trigger, and effect.
  */
-function generateRandomCardStats() {
+function generateRandomCardStats(globalCardStats, usePointDistributionSystem) {
   const card = new Card();
 
   if (usePointDistributionSystem) {
     // Distribute points among the stats
-    const distributedStats = distributePoints(globalCardStats.distributionPoints);
+    const distributedStats = distributePoints(globalCardStats.distributionPoints, globalCardStats);
     card.HealthPoints = distributedStats.health;
     card.DamagePoints = distributedStats.damage;
     card.DefencePoints = distributedStats.defence;
     card.AccuracyPoints = distributedStats.accuracy;
-
   } else {
     // Assign random stats to the card within the defined ranges
     card.AccuracyPoints = getRandomInt(
@@ -48,19 +49,20 @@ function generateRandomCardStats() {
 /**
  * Distributes a given number of points across four stats while respecting min and max values.
  * @param {number} totalPoints - The total points to distribute.
+ * @param {Object} globalCardStats - The global card stats.
  * @returns {Object} - An object containing the distributed stats.
  */
-function distributePoints(totalPoints) {
-  // they results start at the min values
-  const setStats = { 
-    health: globalCardStats.healthRange[0], 
-    damage: globalCardStats.damageRange[0], 
-    defence: globalCardStats.defenceRange[0], 
-    accuracy: globalCardStats.accuracyRange[0] 
+function distributePoints(totalPoints, globalCardStats) {
+  // Initialize stats with their minimum values
+  const setStats = {
+    health: globalCardStats.healthRange[0],
+    damage: globalCardStats.damageRange[0],
+    defence: globalCardStats.defenceRange[0],
+    accuracy: globalCardStats.accuracyRange[0]
   };
 
-  // Calculate the points left after setting the min values
-  var pointsLeft = totalPoints- setStats.health - setStats.damage - setStats.defence - setStats.accuracy;
+  // Calculate the points left after setting the minimum values
+  let pointsLeft = totalPoints - setStats.health - setStats.damage - setStats.defence - setStats.accuracy;
 
   // Distribute the remaining points randomly
   while (pointsLeft > 0) {
@@ -91,11 +93,11 @@ function distributePoints(totalPoints) {
         }
         break;
       default:
-        break
+        break;
     }
   }
 
-  return setStats
+  return setStats;
 }
 
 /**

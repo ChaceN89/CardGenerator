@@ -1,5 +1,6 @@
-// the card class with information about the card
-// default values
+import React, { createContext, useContext, useState } from 'react';
+
+// The card class with information about the card
 export class Card {
   constructor() {
     this.cardName = "";
@@ -14,17 +15,29 @@ export class Card {
   }
 }
 
-export const usePointDistributionSystem = true;
-
-//  the default stats that a card can have and the max points that can be distributed 
-export const globalCardStats = {
-  healthRange:[2,5],
-  damageRange:[1,4],
-  defenceRange:[2,4],
-  accuracyRange:[1,5],
+// Initial values for context
+const initialGlobalCardStats = {
+  healthRange: [2, 5],
+  damageRange: [1, 4],
+  defenceRange: [2, 4],
+  accuracyRange: [1, 5],
   distributionPoints: 12
 };
 
+const initialUsePointDistributionSystem = true;
 
+// Create context
+const CardStatsContext = createContext();
 
+export const CardStatsProvider = ({ children }) => {
+  const [globalCardStats, setGlobalCardStats] = useState(initialGlobalCardStats);
+  const [usePointDistributionSystem, setUsePointDistributionSystem] = useState(initialUsePointDistributionSystem);
 
+  return (
+    <CardStatsContext.Provider value={{ globalCardStats, setGlobalCardStats, usePointDistributionSystem, setUsePointDistributionSystem }}>
+      {children}
+    </CardStatsContext.Provider>
+  );
+};
+
+export const useCardStats = () => useContext(CardStatsContext);
