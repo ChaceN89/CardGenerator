@@ -54,6 +54,38 @@ const Card = ({ card }) => {
     }
   };
 
+  const copyCardTextToClipboard = () => {
+    const htmlToCopy = `
+      <div style="font-size: 7px; display: flex; justify-content: space-around; align-items: center; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center;">
+          <span style="color: red; margin-right: 4px;">&#x1F3AF;</span> 
+          <span style="font-size: 6px; margin-right: 20px;">${card.Accuracy}</span> &nbsp;&nbsp;
+          <span style="color: gray; margin-right: 4px;">&#x1F5E1;</span> 
+          <span style="font-size: 6px; margin-right: 20px;">${card.Retaliation}</span> &nbsp;&nbsp;
+          <span style="color: blue; margin-right: 4px;">&#x1F6E1;</span> 
+          <span style="font-size: 6px; margin-right: 20px;">${card.Damage}</span> &nbsp;&nbsp;
+          <span style="color: red; margin-right: 4px;">&#x2764;</span> 
+          <span style="font-size: 6px; margin-right: 20px;">${card.HealthPoints} / ${card.HealthPoints}</span>
+        </div>
+      </div>
+      <div style="font-size: 6px;">
+        <p style="margin-bottom: 2px;"><strong>If:</strong> ${card.Trigger}</p>
+        <p style="margin-bottom: 2px;"><strong>Then:</strong> ${card.Effect}</p>
+      </div>
+    `;
+
+    const blob = new Blob([htmlToCopy], { type: 'text/html' });
+    const item = new ClipboardItem({ 'text/html': blob });
+
+    navigator.clipboard.write([item])
+      .then(() => {
+        toast.success('Text copied to clipboard!');
+      })
+      .catch((error) => {
+        console.error('Oops, something went wrong!', error);
+      });
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div
@@ -89,7 +121,7 @@ const Card = ({ card }) => {
             <FaShieldAlt className="mr-0.5 text-blue-500" /> {card.Damage}
           </div>
           <div className="flex items-center">
-            <FaHeart className="mr-0.5 text-red-500" /> {card.HealthPoints}
+            <FaHeart className="mr-0.5 text-red-500" /> {card.HealthPoints} / {card.HealthPoints}
           </div>
         </div>
         <div className="flex flex-col justify-around items-center mb-2 text-xl">
@@ -109,7 +141,10 @@ const Card = ({ card }) => {
           Download Image
         </Button>
         <Button onClick={copyCardImageToClipboard} color="blue">
-          Copy to Clipboard
+          Copy as PNG
+        </Button>
+        <Button onClick={copyCardTextToClipboard} color="blue">
+          Copy Text
         </Button>
       </div>
     </div>
