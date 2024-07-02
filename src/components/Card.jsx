@@ -34,7 +34,7 @@ const Card = ({ card }) => {
     }
   };
 
-  const copyCardImageToClipboard = () => {
+  const copyCardToClipboard = () => {
     if (cardRef.current) {
       toPng(cardRef.current)
         .then((dataUrl) => {
@@ -86,6 +86,41 @@ const Card = ({ card }) => {
       });
   };
 
+  const copyCardImageToClipboard = () => {
+    const originalStats = cardRef.current.querySelectorAll('.card-stats');
+    const originalStatsContent = Array.from(originalStats).map(stat => stat.innerHTML);
+  
+    // Set stats content to blank
+    originalStats.forEach(stat => {
+      stat.innerHTML = '&nbsp;&nbsp;&nbsp;<br/>';
+    });
+  
+    // Generate the PNG and copy to clipboard
+    toPng(cardRef.current)
+      .then((dataUrl) => {
+        fetch(dataUrl)
+          .then(res => res.blob())
+          .then(blob => {
+            const item = new ClipboardItem({ 'image/png': blob });
+            navigator.clipboard.write([item])
+              .then(() => {
+                toast.success('Image copied to clipboard!');
+              })
+              .catch((error) => {
+                console.error('Oops, something went wrong!', error);
+              });
+          });
+      })
+      .finally(() => {
+        // Restore the original stats content
+        originalStats.forEach((stat, index) => {
+          stat.innerHTML = originalStatsContent[index];
+        });
+      });
+  };
+  
+  
+
   return (
     <div className="flex flex-col items-center">
       <div
@@ -110,7 +145,7 @@ const Card = ({ card }) => {
             className="mb-4 mx-auto h-56 w-full object-contain"
           />
         )}
-        <div className="flex justify-around items-center mb-2 text-xl">
+        <div className="flex justify-around items-center mb-2 text-xl card-stats">
           <div className="flex items-center">
             <FaBullseye className="mr-0.5 text-red-500" /> {card.Accuracy}
           </div>
@@ -124,27 +159,31 @@ const Card = ({ card }) => {
             <FaHeart className="mr-0.5 text-red-500" /> {card.HealthPoints} / {card.HealthPoints}
           </div>
         </div>
+
         <div className="flex flex-col justify-around items-center mb-2 text-xl">
           <div>
-            <p className="mb-1 text-sm">
+            <p className="mb-1 text-sm card-stats">
               <strong>If:</strong> {card.Trigger}
             </p>
-            <p className="mb-1 text-sm">
+            <p className="mb-1 text-sm card-stats">
               <strong>Then:</strong> {card.Effect}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="mt-4 flex gap-1 justify-between w-80">
+      <div className="mt-4 flex gap-1 justify-center flex-wrap">
         <Button onClick={downloadCardImage} color="blue">
           Download Image
         </Button>
-        <Button onClick={copyCardImageToClipboard} color="blue">
-          Copy as PNG
+        <Button onClick={copyCardToClipboard} color="blue">
+          Copy Card as PNG
         </Button>
         <Button onClick={copyCardTextToClipboard} color="blue">
           Copy Text
+        </Button>
+        <Button onClick={copyCardImageToClipboard} color="blue">
+          Copy Image as PNG
         </Button>
       </div>
     </div>
