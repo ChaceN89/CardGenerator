@@ -1,4 +1,5 @@
-import { Card, globalCardStats, triggersAndEffects, usePointDistributionSystem } from './CardStats';
+import { Card, globalCardStats, usePointDistributionSystem } from './CardStats';
+import { triggersAndEffects } from './TriggersAndEffect';
 
 /**
  * Generates random card stats and assigns a random trigger and effect based on the card's rarity.
