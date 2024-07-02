@@ -59,11 +59,11 @@ const Card = ({ card }) => {
       <div style="font-size: 7px; display: flex; justify-content: space-around; align-items: center; margin-bottom: 8px;">
         <div style="display: flex; align-items: center;">
           <span style="color: red; margin-right: 4px;">&#x1F3AF;</span> 
-          <span style="font-size: 6px; margin-right: 20px;">${card.Accuracy}</span> &nbsp;&nbsp;
+          <span style="font-size: 6px; margin-right: 20px;">${card.AccuracyPoints}</span> &nbsp;&nbsp;
           <span style="color: gray; margin-right: 4px;">&#x1F5E1;</span> 
-          <span style="font-size: 6px; margin-right: 20px;">${card.Retaliation}</span> &nbsp;&nbsp;
+          <span style="font-size: 6px; margin-right: 20px;">${card.DefencePoints}</span> &nbsp;&nbsp;
           <span style="color: blue; margin-right: 4px;">&#x1F6E1;</span> 
-          <span style="font-size: 6px; margin-right: 20px;">${card.Damage}</span> &nbsp;&nbsp;
+          <span style="font-size: 6px; margin-right: 20px;">${card.DamagePoints}</span> &nbsp;&nbsp;
           <span style="color: red; margin-right: 4px;">&#x2764;</span> 
           <span style="font-size: 6px; margin-right: 20px;">${card.HealthPoints} / ${card.HealthPoints}</span>
         </div>
