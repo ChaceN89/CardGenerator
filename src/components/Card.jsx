@@ -172,18 +172,19 @@ const Card = ({ card }) => {
         </div>
       </div>
 
-      <div className="mt-4 flex gap-1 justify-center flex-wrap">
-        <Button onClick={downloadCardImage} color="blue">
-          Download Image
-        </Button>
-        <Button onClick={copyCardToClipboard} color="blue">
-          Copy Card as PNG
-        </Button>
+      <div className="mt-4 grid grid-cols-2 gap-1">
         <Button onClick={copyCardTextToClipboard} color="blue">
-          Copy Text
+          Copy Stats
         </Button>
         <Button onClick={copyCardImageToClipboard} color="blue">
-          Copy Image as PNG
+          Copy Card Image
+        </Button>
+        <hr className='col-span-2 border-2 border-blue-500'/>
+        <Button onClick={copyCardToClipboard} color="blue">
+          Copy Whole Card 
+        </Button>
+        <Button onClick={downloadCardImage} color="blue">
+          Download Card
         </Button>
       </div>
     </div>
