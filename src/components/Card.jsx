@@ -11,11 +11,11 @@ const Card = ({ card }) => {
   const getBorderColor = (rarity) => {
     switch (rarity) {
       case 'Rare':
-        return 'border-yellow-500';
+        return 'border-red-900';
       case 'Uncommon':
-        return 'border-blue-500';
+        return 'border-blue-800';
       default:
-        return 'border-green-500';
+        return 'border-green-300';
     }
   };
 

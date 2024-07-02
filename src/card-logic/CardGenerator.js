@@ -132,17 +132,18 @@ function generateRandomTriggerEffect() {
 
 /**
  * Selects a random element from an array based on their weights.
+ * assumes a elemtent has a weight property of 1 if not provided in the element 
  * @param {Array} elements - The array of elements to choose from.
  * @returns {Object} - The selected element.
  */
 function getRandomElementWithWeight(elements) {
-  const totalWeight = elements.reduce((acc, element) => acc + parseFloat(element.weight), 0);
+  const totalWeight = elements.reduce((acc, element) => acc + (element.weight ? parseFloat(element.weight) : 1), 0);
   const randomValue = Math.random() * totalWeight;
   let cumulativeWeight = 0;
 
   // Select an element based on the random value
   for (const element of elements) {
-    cumulativeWeight += parseFloat(element.weight);
+    cumulativeWeight += (element.weight ? parseFloat(element.weight) : 1);
     if (randomValue < cumulativeWeight) {
       return element;
     }
@@ -150,6 +151,7 @@ function getRandomElementWithWeight(elements) {
 
   return elements[0]; // Fallback to the first element if no element is selected
 }
+
 
 /**
  * Generates a random integer between the specified min (inclusive) and max (exclusive).
