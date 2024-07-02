@@ -8,12 +8,12 @@ const Button = ({ onClick, children, color, className = '', isActive = false }) 
     yellow: 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500',
     red: 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
   };
-  const activeStyles = isActive ? 'border-4 border-double border-black' : '';
+  const activeStyles = isActive ? 'bg-opacity-90 ring ring-offset-2 ring-white' : '';
 
   return (
     <button
       onClick={onClick}
-      className={`${baseStyles} ${colorStyles[color]} ${activeStyles} ${className}`}
+      className={`${baseStyles} ${colorStyles[color]} ${activeStyles} ${className} `}
     >
       {children}
     </button>

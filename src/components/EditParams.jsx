@@ -94,7 +94,7 @@ const EditParams = ({ isOpen, onClose }) => {
                 onChange={handleToggle}
                 className="toggle-checkbox"
               />
-              <span className="ml-2">{usePointDistributionSystem ? 'Enabled' : 'Disabled'}</span>
+              <span className="ml-2">{usePointDistributionSystem ? 'Enabled - Randomly distribute '+globalCardStats.distributionPoints + " points." : 'Disabled - Use fully random distribution.'}</span>
             </label>
 
             <li className='pt-2 w-full'>
