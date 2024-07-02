@@ -15,10 +15,25 @@ const EditParams = ({ isOpen, onClose }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     const [stat, range] = name.split('_');
-    setLocalStats((prevStats) => ({
-      ...prevStats,
-      [stat]: prevStats[stat].map((val, index) => (index === parseInt(range) ? Number(value) : val)),
-    }));
+    const newValue = Number(value);
+
+    setLocalStats((prevStats) => {
+      const updatedStats = { ...prevStats };
+      if (range === '0') {
+        // Ensure min is not more than 1 less than max
+        if (newValue >= updatedStats[stat][1]) {
+          updatedStats[stat][1] = newValue;
+        }
+        updatedStats[stat][0] = newValue;
+      } else {
+        // Ensure max is not less than min + 1
+        if (newValue <= updatedStats[stat][0]) {
+          updatedStats[stat][0] = newValue ;
+        }
+        updatedStats[stat][1] = newValue;
+      }
+      return updatedStats;
+    });
   };
 
   const handleToggle = () => {
@@ -53,29 +68,30 @@ const EditParams = ({ isOpen, onClose }) => {
           </label>
         </div>
         <div className="mb-4">
-          <h3 className="text-lg font-bold mb-2">Global Card Stats</h3>
+          <h3 className="text-lg font-bold mb-2 text-center">Global Card Stats</h3>
           <ul className="list-disc list-inside">
             {['healthRange', 'damageRange', 'defenceRange', 'accuracyRange'].map((stat) => (
               <li key={stat}>
                 <strong>{`${stat.replace('Range', ' Range').charAt(0).toUpperCase() + stat.slice(1)}:`}</strong>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 w-full">
                   <input
                     type="number"
                     name={`${stat}_0`}
-                    // min={localStats[stat][0]}
-                    // max={10}
+                    min={0}
+                    max={99}
                     value={localStats[stat][0]}
                     onChange={handleChange}
-                    className="p-1 border rounded-md"
+                    className="p-1 border rounded-md w-full "
                   />
+                  <div> - </div>
                   <input
                     type="number"
                     name={`${stat}_1`}
-                    // min={0}
-                    // max={localStats[stat][1]}
+                    min={1}
+                    max={100}
                     value={localStats[stat][1]}
                     onChange={handleChange}
-                    className="p-1 border rounded-md"
+                    className="p-1 border rounded-md w-full"
                   />
                 </div>
               </li>
@@ -98,9 +114,6 @@ const EditParams = ({ isOpen, onClose }) => {
           Save
         </Button>
         <Button onClick={onClose} color="red" className="w-full mb-2">
-          Close
-        </Button>
-        <Button onClick={onClose} color="red" className="w-full">
           Close
         </Button>
       </div>
