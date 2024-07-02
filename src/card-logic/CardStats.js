@@ -29,7 +29,7 @@ export const globalCardStats = {
 // list of triggers and effects that can be applied to cards
 export const triggersAndEffects = [
   {
-    weight: 40,
+    weight: 1,
     rarity: "Common",
     trigger: "This card dies (not banished)",
     effects: [

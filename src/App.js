@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Card from './components/Card';
 import InfoModal from './components/InfoModal';
+import EditParams from './components/EditParams';
 import Button from './components/Button';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
+import { globalCardStats, usePointDistributionSystem } from './card-logic/CardStats';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditParamsOpen, setIsEditParamsOpen] = useState(false);
   const [cardHistory, setCardHistory] = useState([]);
 
   const handleImageUpload = (e) => {
@@ -73,6 +76,13 @@ function App() {
         >
           Info
         </Button>
+        <Button
+          onClick={() => setIsEditParamsOpen(true)}
+          color="yellow"
+          className="ml-4"
+        >
+          Edit Generation
+        </Button>
       </div>
 
       {isCustom ? (
@@ -127,8 +137,13 @@ function App() {
         </div>
       </div>
 
-
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <EditParams 
+        isOpen={isEditParamsOpen} 
+        onClose={() => setIsEditParamsOpen(false)} 
+        globalCardStats={globalCardStats} 
+        usePointDistributionSystem={usePointDistributionSystem} 
+      />
     </div>
   );
 }
