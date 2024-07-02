@@ -1,11 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Card from './components/Card';
 import InfoModal from './components/InfoModal';
 import Button from './components/Button';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
-import { toPng } from 'html-to-image';
-import { toast, Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [card, setCard] = useState(null);
@@ -13,7 +12,6 @@ function App() {
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const cardRef = useRef();
 
   const handleImageUpload = (e) => {
     setCustomImage(URL.createObjectURL(e.target.files[0]));
@@ -36,41 +34,6 @@ function App() {
     newCard.cardName = defaultCard.name;
     newCard.cardSprite = `${process.env.PUBLIC_URL}/cardImages/${defaultCard.filePath}`;
     setCard(newCard);
-  };
-
-  const downloadCardImage = () => {
-    if (cardRef.current) {
-      toPng(cardRef.current)
-        .then((dataUrl) => {
-          const link = document.createElement('a');
-          link.download = card.cardName + ".png" || "card.png";
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-          console.error('Oops, something went wrong!', error);
-        });
-    }
-  };
-
-  const copyCardImageToClipboard = () => {
-    if (cardRef.current) {
-      toPng(cardRef.current)
-        .then((dataUrl) => {
-          fetch(dataUrl)
-            .then(res => res.blob())
-            .then(blob => {
-              const item = new ClipboardItem({ 'image/png': blob });
-              navigator.clipboard.write([item])
-                .then(() => {
-                  toast.success('Image copied to clipboard!');
-                })
-                .catch((error) => {
-                  console.error('Oops, something went wrong!', error);
-                });
-            });
-        });
-    }
   };
 
   return (
@@ -135,12 +98,7 @@ function App() {
       )}
 
       {card && (
-        <Card
-          cardRef={cardRef}
-          card={card}
-          downloadCardImage={downloadCardImage}
-          copyCardImageToClipboard={copyCardImageToClipboard}
-        />
+        <Card card={card} />
       )}
 
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
