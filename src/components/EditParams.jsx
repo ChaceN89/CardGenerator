@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from './Button';
+import { globalCardStats, usePointDistributionSystem } from '../card-logic/CardStats';
 
-const EditParams = ({ isOpen, onClose, globalCardStats, usePointDistributionSystem }) => {
+const EditParams = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (

@@ -5,7 +5,6 @@ import EditParams from './components/EditParams';
 import Button from './components/Button';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
-import { globalCardStats, usePointDistributionSystem } from './card-logic/CardStats';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -141,8 +140,6 @@ function App() {
       <EditParams 
         isOpen={isEditParamsOpen} 
         onClose={() => setIsEditParamsOpen(false)} 
-        globalCardStats={globalCardStats} 
-        usePointDistributionSystem={usePointDistributionSystem} 
       />
     </div>
   );
