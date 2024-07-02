@@ -28,7 +28,7 @@ function Main() {
   const updateCardHistory = (newCard) => {
     setCardHistory((prevHistory) => {
       const updatedHistory = [newCard, ...prevHistory];
-      return updatedHistory.slice(0, 12); // Keep only the last 12 cards including active card
+      return updatedHistory.slice(0, 40); // Keep only the last 140 cards including active card
     });
   };
 
@@ -119,21 +119,25 @@ function Main() {
         <Card card={card} />
       )}
 
-      <hr className="mt-4 w-full border-2 border-blue-500" />
 
-      <h2 className="text-2xl font-bold my-4 underline">Card History</h2>
-      <div className="flex overflow-x-auto mt-8 pb-4 space-x-4 w-full">
-        <div className="flex space-x-4 items-center">
-          {cardHistory.slice(1).map((card, index) => (
-            <React.Fragment key={index}>
-              {index > 0 && <div className="h-full border-l-2 border-blue-500 mx-4"></div>}
-              <div className="flex-shrink-0">
-                <Card card={card} />
-              </div>
-            </React.Fragment>
-          ))}
+      {cardHistory.length > 1 && (
+        <>
+        <hr className="mt-14 w-full border-2 border-blue-500" />
+        <h2 className="text-2xl font-bold my-4 underline">Card History</h2>
+        <div className="flex overflow-x-auto mt-8 pb-4 space-x-4 w-full">
+          <div className="flex space-x-4 items-center">
+            {cardHistory.slice(1).map((card, index) => (
+              <React.Fragment key={index}>
+                {index > 0 && <div className="h-full border-l-2 border-blue-500 mx-4"></div>}
+                <div className="flex-shrink-0">
+                  <Card card={card} />
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-      </div>
+        </>
+      )}
 
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <EditParams 

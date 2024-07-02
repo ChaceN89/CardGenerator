@@ -125,7 +125,7 @@ const Card = ({ card }) => {
     <div className="flex flex-col items-center">
       <div
         ref={cardRef}
-        className={`card py-4 px-2 rounded-lg shadow-lg w-72 bg-slate-100 border-4 min-h-[400px] ${getBorderColor(
+        className={`card py-4 px-2 rounded-lg shadow-lg w-72 bg-slate-100 border-4 min-h-[440px] ${getBorderColor(
           card.rarity
         )}`}
       >
@@ -173,11 +173,11 @@ const Card = ({ card }) => {
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-1">
+        <Button onClick={copyCardImageToClipboard} color="blue">
+          Copy Card & Image
+        </Button>
         <Button onClick={copyCardTextToClipboard} color="blue">
           Copy Stats
-        </Button>
-        <Button onClick={copyCardImageToClipboard} color="blue">
-          Copy Card Image
         </Button>
         <hr className='col-span-2 border-2 border-blue-500'/>
         <Button onClick={copyCardToClipboard} color="blue">

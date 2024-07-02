@@ -120,7 +120,7 @@ const EditParams = ({ isOpen, onClose }) => {
           Save and Close
         </Button>
         <Button onClick={resetStats} color="red" className="w-full mb-2">
-          Reset Stats
+          Reset Parameters
         </Button>
       </div>
     </div>
