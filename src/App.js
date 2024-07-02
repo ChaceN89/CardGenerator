@@ -12,6 +12,7 @@ function App() {
   const [customText, setCustomText] = useState('');
   const [customImage, setCustomImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cardHistory, setCardHistory] = useState([]);
 
   const handleImageUpload = (e) => {
     setCustomImage(URL.createObjectURL(e.target.files[0]));
@@ -21,11 +22,19 @@ function App() {
     setCustomText(e.target.value);
   };
 
+  const updateCardHistory = (newCard) => {
+    setCardHistory(prevHistory => {
+      const updatedHistory = [newCard, ...prevHistory];
+      return updatedHistory.slice(0, 10); // Keep only the last 10 cards
+    });
+  };
+
   const generateCustomCard = () => {
     const newCard = generateRandomCardStats();
     newCard.cardName = customText;
     newCard.customSprite = customImage;
     setCard(newCard);
+    updateCardHistory(newCard);
   };
 
   const generateDefaultCard = () => {
@@ -34,6 +43,7 @@ function App() {
     newCard.cardName = defaultCard.name;
     newCard.cardSprite = `${process.env.PUBLIC_URL}/cardImages/${defaultCard.filePath}`;
     setCard(newCard);
+    updateCardHistory(newCard);
   };
 
   return (
@@ -93,13 +103,30 @@ function App() {
           color="green"
           className="mb-10"
         >
-          Generate Card
+          Generate New Card
         </Button>
       )}
 
       {card && (
         <Card card={card} />
       )}
+
+      <hr className="mt-4 w-full border-2 border-blue-500" />
+
+      <h2 className="text-2xl font-bold my-4">Card History</h2>
+      <div className="flex overflow-x-auto mt-8 pb-4 space-x-4 w-full">
+        <div className="flex space-x-4 items-center">
+          {cardHistory.slice(1).map((card, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <div className="h-full border-l-2 border-blue-500 mx-4"></div>}
+              <div className="flex-shrink-0">
+                <Card card={card} />
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
 
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
