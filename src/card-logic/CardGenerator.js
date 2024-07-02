@@ -1,4 +1,4 @@
-import { Card, globalCardStats, triggersAndEffects } from './CardStats';
+import { Card, globalCardStats, triggersAndEffects, usePointDistributionSystem } from './CardStats';
 
 /**
  * Generates random card stats and assigns a random trigger and effect based on the card's rarity.
@@ -7,12 +7,30 @@ import { Card, globalCardStats, triggersAndEffects } from './CardStats';
 function generateRandomCardStats() {
   const card = new Card();
 
-  // Assign random stats to the card within the defined ranges
-  card.Accuracy = getRandomInt(globalCardStats.accuracy[0], globalCardStats.accuracy[1] + 1);
-  card.Retaliation = getRandomInt(globalCardStats.defense[0], globalCardStats.defense[1] + 1);
-  card.Damage = getRandomInt(globalCardStats.damage[0], globalCardStats.damage[1] + 1);
-  card.HealthPoints = getRandomInt(globalCardStats.health[0], globalCardStats.health[1] + 1);
 
+  if (usePointDistributionSystem){
+
+
+    // card.distributionPoints
+    // 
+
+
+    // Assign random stats to the card within the defined ranges
+    card.Accuracy = getRandomInt(globalCardStats.accuracy[0], globalCardStats.accuracy[1] + 1);
+    card.Retaliation = getRandomInt(globalCardStats.defense[0], globalCardStats.defense[1] + 1);
+    card.Damage = getRandomInt(globalCardStats.damage[0], globalCardStats.damage[1] + 1);
+    card.HealthPoints = getRandomInt(globalCardStats.health[0], globalCardStats.health[1] + 1);
+
+
+
+  }else{
+    // Assign random stats to the card within the defined ranges
+    card.Accuracy = getRandomInt(globalCardStats.accuracy[0], globalCardStats.accuracy[1] + 1);
+    card.Retaliation = getRandomInt(globalCardStats.defense[0], globalCardStats.defense[1] + 1);
+    card.Damage = getRandomInt(globalCardStats.damage[0], globalCardStats.damage[1] + 1);
+    card.HealthPoints = getRandomInt(globalCardStats.health[0], globalCardStats.health[1] + 1);
+
+  }
   // Generate a random trigger and effect
   const triggerEffect = generateRandomTriggerEffect();
   card.Trigger = triggerEffect.trigger;
