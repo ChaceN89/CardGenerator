@@ -5,10 +5,10 @@ import EditParams from './components/EditParams';
 import Button from './components/Button';
 import generateRandomCardStats from './card-logic/CardGenerator';
 import { generateRandomDefaultCard } from './card-logic/DefaultCardData';
-import { useCardStats } from './card-logic/CardStats';
+import { useGlobalCardStats } from './card-logic/CardStats';
 
 function Main() {
-  const { globalCardStats, usePointDistributionSystem } = useCardStats();
+  const { globalCardStats, usePointDistributionSystem } = useGlobalCardStats();
   const [card, setCard] = useState(null);
   const [isCustom, setIsCustom] = useState(true);
   const [customText, setCustomText] = useState('');
@@ -72,7 +72,7 @@ function Main() {
           color="yellow"
           className="ml-4"
         >
-          Info
+          Game Info
         </Button>
         <Button
           onClick={() => setIsEditParamsOpen(true)}

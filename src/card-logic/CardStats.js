@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
+
 
 // The card class with information about the card
 export class Card {
@@ -27,17 +29,27 @@ const initialGlobalCardStats = {
 const initialUsePointDistributionSystem = true;
 
 // Create context
-const CardStatsContext = createContext();
+const GlobalCardStatsContext = createContext();
 
-export const CardStatsProvider = ({ children }) => {
-  const [globalCardStats, setGlobalCardStats] = useState(initialGlobalCardStats);
+export const GlobalCardStatsProvider = ({ children }) => {
+  // Create state with initial values
+  const [globalCardStats, setGlobalCardStats] = useState(cloneDeep(initialGlobalCardStats));
   const [usePointDistributionSystem, setUsePointDistributionSystem] = useState(initialUsePointDistributionSystem);
 
+  // Function to reset state
+  const resetGlobalCardStats = () => {
+    setGlobalCardStats(cloneDeep(initialGlobalCardStats));
+    setUsePointDistributionSystem(initialUsePointDistributionSystem);
+  };
+
   return (
-    <CardStatsContext.Provider value={{ globalCardStats, setGlobalCardStats, usePointDistributionSystem, setUsePointDistributionSystem }}>
+    <GlobalCardStatsContext.Provider value={{ globalCardStats, setGlobalCardStats, usePointDistributionSystem, setUsePointDistributionSystem, resetGlobalCardStats }}>
       {children}
-    </CardStatsContext.Provider>
+    </GlobalCardStatsContext.Provider>
   );
 };
 
-export const useCardStats = () => useContext(CardStatsContext);
+// Custom hook to use the context
+export const useGlobalCardStats = () => {
+  return useContext(GlobalCardStatsContext);
+};

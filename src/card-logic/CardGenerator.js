@@ -60,10 +60,20 @@ function distributePoints(totalPoints, globalCardStats) {
     defence: globalCardStats.defenceRange[0],
     accuracy: globalCardStats.accuracyRange[0]
   };
+  
+  // check to make sure the mak total points is not exceeded the max distribution points
+  const maxDistributionPoints = globalCardStats.healthRange[1] + globalCardStats.damageRange[1] + globalCardStats.defenceRange[1] + globalCardStats.accuracyRange[1];
+
+  if (totalPoints > maxDistributionPoints) {
+    totalPoints = maxDistributionPoints
+  }
 
   // Calculate the points left after setting the minimum values
-  let pointsLeft = totalPoints - setStats.health - setStats.damage - setStats.defence - setStats.accuracy;
+  var pointsLeft = totalPoints - setStats.health - setStats.damage - setStats.defence - setStats.accuracy;
+  
 
+
+  let i = 0
   // Distribute the remaining points randomly
   while (pointsLeft > 0) {
     const stat = getRandomInt(0, 4);
@@ -94,6 +104,12 @@ function distributePoints(totalPoints, globalCardStats) {
         break;
       default:
         break;
+    }
+
+    // prevent the loop from running indefinitely
+    i++
+    if (i > 1000) {
+      break;
     }
   }
 
