@@ -25,7 +25,7 @@ function App() {
   const updateCardHistory = (newCard) => {
     setCardHistory(prevHistory => {
       const updatedHistory = [newCard, ...prevHistory];
-      return updatedHistory.slice(0, 10); // Keep only the last 10 cards
+      return updatedHistory.slice(0, 12); // Keep only the last 12 cards including active card
     });
   };
 

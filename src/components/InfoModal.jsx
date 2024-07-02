@@ -12,12 +12,12 @@ const InfoModal = ({ isOpen, onClose }) => {
         <ul className="list-disc list-inside">
           <li><strong>Health:</strong> Determines the HP of the card. When this reaches zero, your card is destroyed, and your overall life is decreased by one.</li>
           <li><strong>Damage:</strong> Determines the attack strength of the card. This is the damage done to an opponent's card when you win a fight.</li>
-          <li><strong>Defense:</strong> Determines the defensive strength of the card. This stat indicates how many slots on the roulette wheel you have when being attacked.</li>
+          <li><strong>Defence:</strong> Determines the defensive strength of the card. This stat indicates how many slots on the roulette wheel you have when being attacked.</li>
           <li><strong>Accuracy:</strong> Indicates how many slots on the roulette wheel you have when attacking, determining the likelihood of successful attacks.</li>
           <li><strong>Trigger:</strong> The condition under which the card's ability activates.</li>
           <li><strong>Effect:</strong> The result of the card's ability when the trigger condition is met.</li>
         </ul>
-        <p className="mt-4 text-center">When a card is attacked, the attacker's accuracy is compared to the defender's defense. A roulette wheel is used to determine the winner, with the weights of accuracy and defense influencing the outcome. So if your attack is higher than the defender's defense, you have a much higher chance of winning the fight.</p>
+        <p className="mt-4 text-center">When a card is attacked, the attacker's accuracy is compared to the defender's defence. A roulette wheel is used to determine the winner, with the weights of accuracy and defence influencing the outcome. So if your attack is higher than the defender's defence, you have a much higher chance of winning the fight.</p>
         <Button
           onClick={onClose}
           color="blue"

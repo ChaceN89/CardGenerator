@@ -7,30 +7,34 @@ import { Card, globalCardStats, triggersAndEffects, usePointDistributionSystem }
 function generateRandomCardStats() {
   const card = new Card();
 
+  if (usePointDistributionSystem) {
+    // Distribute points among the stats
+    const distributedStats = distributePoints(globalCardStats.distributionPoints);
+    card.HealthPoints = distributedStats.health;
+    card.DamagePoints = distributedStats.damage;
+    card.DefencePoints = distributedStats.defence;
+    card.AccuracyPoints = distributedStats.accuracy;
 
-  if (usePointDistributionSystem){
-
-
-    // card.distributionPoints
-    // 
-
-
+  } else {
     // Assign random stats to the card within the defined ranges
-    card.Accuracy = getRandomInt(globalCardStats.accuracy[0], globalCardStats.accuracy[1] + 1);
-    card.Retaliation = getRandomInt(globalCardStats.defense[0], globalCardStats.defense[1] + 1);
-    card.Damage = getRandomInt(globalCardStats.damage[0], globalCardStats.damage[1] + 1);
-    card.HealthPoints = getRandomInt(globalCardStats.health[0], globalCardStats.health[1] + 1);
-
-
-
-  }else{
-    // Assign random stats to the card within the defined ranges
-    card.Accuracy = getRandomInt(globalCardStats.accuracy[0], globalCardStats.accuracy[1] + 1);
-    card.Retaliation = getRandomInt(globalCardStats.defense[0], globalCardStats.defense[1] + 1);
-    card.Damage = getRandomInt(globalCardStats.damage[0], globalCardStats.damage[1] + 1);
-    card.HealthPoints = getRandomInt(globalCardStats.health[0], globalCardStats.health[1] + 1);
-
+    card.AccuracyPoints = getRandomInt(
+      globalCardStats.accuracyRange[0], 
+      globalCardStats.accuracyRange[1] + 1
+    );
+    card.DefencePoints = getRandomInt(
+      globalCardStats.defenceRange[0], 
+      globalCardStats.defenceRange[1] + 1
+    );
+    card.DamagePoints = getRandomInt(
+      globalCardStats.damageRange[0], 
+      globalCardStats.damageRange[1] + 1
+    );
+    card.HealthPoints = getRandomInt(
+      globalCardStats.healthRange[0], 
+      globalCardStats.healthRange[1] + 1
+    );
   }
+
   // Generate a random trigger and effect
   const triggerEffect = generateRandomTriggerEffect();
   card.Trigger = triggerEffect.trigger;
@@ -38,6 +42,59 @@ function generateRandomCardStats() {
   card.rarity = triggerEffect.rarity;
 
   return card;
+}
+
+/**
+ * Distributes a given number of points across four stats while respecting min and max values.
+ * @param {number} totalPoints - The total points to distribute.
+ * @returns {Object} - An object containing the distributed stats.
+ */
+function distributePoints(totalPoints) {
+  // they results start at the min values
+  const setStats = { 
+    health: globalCardStats.healthRange[0], 
+    damage: globalCardStats.damageRange[0], 
+    defence: globalCardStats.defenceRange[0], 
+    accuracy: globalCardStats.accuracyRange[0] 
+  };
+
+  // Calculate the points left after setting the min values
+  var pointsLeft = totalPoints- setStats.health - setStats.damage - setStats.defence - setStats.accuracy;
+
+  // Distribute the remaining points randomly
+  while (pointsLeft > 0) {
+    const stat = getRandomInt(0, 4);
+    switch (stat) {
+      case 0:
+        if (setStats.health < globalCardStats.healthRange[1]) {
+          setStats.health++;
+          pointsLeft--;
+        }
+        break;
+      case 1:
+        if (setStats.damage < globalCardStats.damageRange[1]) {
+          setStats.damage++;
+          pointsLeft--;
+        }
+        break;
+      case 2:
+        if (setStats.defence < globalCardStats.defenceRange[1]) {
+          setStats.defence++;
+          pointsLeft--;
+        }
+        break;
+      case 3:
+        if (setStats.accuracy < globalCardStats.accuracyRange[1]) {
+          setStats.accuracy++;
+          pointsLeft--;
+        }
+        break;
+      default:
+        break
+    }
+  }
+
+  return setStats
 }
 
 /**

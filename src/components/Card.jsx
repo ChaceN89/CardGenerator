@@ -125,7 +125,7 @@ const Card = ({ card }) => {
     <div className="flex flex-col items-center">
       <div
         ref={cardRef}
-        className={`card py-4 px-2 rounded-lg shadow-lg w-72 bg-slate-100 border-4 ${getBorderColor(
+        className={`card py-4 px-2 rounded-lg shadow-lg w-72 bg-slate-100 border-4 min-h-[400px] ${getBorderColor(
           card.rarity
         )}`}
       >
@@ -136,24 +136,24 @@ const Card = ({ card }) => {
           <img
             src={card.customSprite}
             alt="Custom Card Sprite"
-            className="mb-4 mx-auto h-56 w-full object-contain"
+            className="mb-4 mx-auto h-44 w-full object-contain"
           />
         ) : (
           <img
             src={card.cardSprite}
             alt="Card Sprite"
-            className="mb-4 mx-auto h-56 w-full object-contain"
+            className="mb-4 mx-auto h-44 w-full object-contain"
           />
         )}
         <div className="flex justify-around items-center mb-2 text-xl card-stats">
           <div className="flex items-center">
-            <FaBullseye className="mr-0.5 text-red-500" /> {card.Accuracy}
+            <FaBullseye className="mr-0.5 text-red-500" /> {card.AccuracyPoints}
           </div>
           <div className="flex items-center">
-            <LuSword className="mr-0.5 text-gray-500" /> {card.Retaliation}
+            <LuSword className="mr-0.5 text-gray-500" /> {card.DamagePoints}
           </div>
           <div className="flex items-center">
-            <FaShieldAlt className="mr-0.5 text-blue-500" /> {card.Damage}
+            <FaShieldAlt className="mr-0.5 text-blue-500" /> {card.DefencePoints}
           </div>
           <div className="flex items-center">
             <FaHeart className="mr-0.5 text-red-500" /> {card.HealthPoints} / {card.HealthPoints}

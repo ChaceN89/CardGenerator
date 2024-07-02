@@ -4,9 +4,9 @@ export class Card {
   constructor() {
     this.cardName = "";
     this.cardSprite = null;
-    this.Accuracy = 0;
-    this.Retaliation = 0;
-    this.Damage = 0;
+    this.AccuracyPoints = 0;
+    this.DefencePoints = 0;
+    this.DamagePoints = 0;
     this.HealthPoints = 0;
     this.rarity = null; 
     this.Trigger = "";
@@ -14,22 +14,22 @@ export class Card {
   }
 }
 
-export const usePointDistributionSystem = false
+export const usePointDistributionSystem = true;
 
 //  the default stats that a card can have and the max points that can be distributed 
 export const globalCardStats = {
-  health:[2,5],
-  damage:[1,4],
-  defense:[2,4],
-  accuracy:[1,5],
-  distributionPoints: 10
+  healthRange:[2,5],
+  damageRange:[1,4],
+  defenceRange:[2,4],
+  accuracyRange:[1,5],
+  distributionPoints: 12
 };
 
 
 // list of triggers and effects that can be applied to cards
 export const triggersAndEffects = [
   {
-    weight: 0.8,
+    weight: 40,
     rarity: "Common",
     trigger: "This card dies (not banished)",
     effects: [
