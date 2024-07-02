@@ -51,12 +51,11 @@ function Main() {
 
   return (
     <>
-      <div className="mb-8 flex">
+      <div className="mb-8  grid grid-cols-2 sm:flex gap-2">
         <Button
           onClick={() => setIsCustom(true)}
           color="blue"
           isActive={isCustom}
-          className="mr-4"
         >
           Custom Cards
         </Button>
@@ -70,33 +69,32 @@ function Main() {
         <Button
           onClick={() => setIsModalOpen(true)}
           color="yellow"
-          className="ml-4"
         >
           Game Info
         </Button>
         <Button
           onClick={() => setIsEditParamsOpen(true)}
           color="yellow"
-          className="ml-4"
         >
-          Edit Generation
+          Edit Generation Parameters
         </Button>
       </div>
 
       {isCustom ? (
-        <div className="mb-8">
-          <input
-            id="file-upload"
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={handleImageUpload}
-          />
+        <div className="mb-8 text-center">
+
           <input
             type="text"
             placeholder="Enter Card Name"
             value={customText}
             onChange={handleCustomTextChange}
             className="mb-4 p-2 border rounded-md mr-1"
+          />
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={handleImageUpload}
           />
           <Button
             onClick={generateCustomCard}
