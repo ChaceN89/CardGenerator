@@ -44,7 +44,8 @@ export const triggersAndEffects = [
       { name: "The attacker loses -1 DEF until the end of the next combat phase." },
       { name: "This card gains +1 DMG until the next time this card deals damage (Can stack)." },
       { name: "You can immediately switch this card out with one in your bench." },
-      { name: "Disables the attacker's ability for 1 round, until the end of the next combat phase." }
+      { name: "Disables the attacker's ability for 1 round, until the end of the next combat phase." },
+      { name: "You immediately create a free card, but its stats are all 1. ." }
     ],
   },
   {
@@ -66,11 +67,12 @@ export const triggersAndEffects = [
       { name: "The card that switches in loses -1 ACC until the end of the next combat phase." },
       { name: "This card gains +1 ACC until the end of the next combat phase." },
       { name: "You can immediately switch out this card with another in your bench." },
-      { name: "Disable the ability of a random card which that opponent owns." }
+      { name: "Disable the ability of a random card which that opponent owns." },
+      { name: "One card you own restores 1 HP." }
     ],
   },
   {
-    trigger: "Any of your cards die or are banished",
+    trigger: "You lose a life point ",
     rarity: "Uncommon",
     effects: [
       { name: "This card gains +1 ACC and +1 DEF for one combat phase it’s fielded for. (Can stack)"},
@@ -88,7 +90,8 @@ export const triggersAndEffects = [
       { name: "This card permanently gains +1 ACC." },
       { name: "The attacked card takes 1 DMG the next time it's benched." },
       { name: "All opponent cards on the field take 1 DMG (can’t reduce below 1)." },
-      { name: "Disable the target's ability for 1 round, until the end of the next combat phase." }
+      { name: "Disable the target's ability for 1 round, until the end of the next combat phase." },
+      { name: "The target card loses -1 DEF and you can change 1 letter in its name." }
     ],
   },
   {
@@ -132,7 +135,8 @@ export const triggersAndEffects = [
       { name: "Deal 1 LP damage to the player with the most LP. (Choose if tie, can’t reduce below 1)." },
       { name: "Choose an opponent; you banish a random card from their bench." },
       { name: "You restore 1 LP." },
-      { name: "Clone this card or another card in your bench, which goes to your bench." }
+      { name: "Clone this card or another card in your bench, which goes to your bench." },
+      { name: "This card gains a crown and can no longer be banished; all of its stats are increased by +1." }
     ],
   },
   {
@@ -154,8 +158,19 @@ export const triggersAndEffects = [
       { name: "Deal 100 damage to one card on the field." },
       { name: "Banish two cards any opponent owns. (These must be from separate players)" },
       { name: "Clone any card an opponent owns and add it to your hand." },
-      { name: "Choose any card of yours that died or was banished and revive it in the last state it was in with full HP, returning it to your bench." }
+      { name: "Choose any card of yours that died or was banished and revive it in the last state it was in with full HP, returning it to your bench." },
+      { name: "You restore 1 LP. Then you can rename any card an opponent owns." },
     ],
   },
-  
+  {
+    trigger: "At the start of your turn in prep phase, you give this card to another player",
+    rarity: "Rare",
+    effects: [
+      {name: "You steal a random card on that player’s bench (Which can be this one)"},
+      {name: "That player can’t choose to attack your cards during the next combat phase, unless you’re the only possible target."},
+      {name: "This card’s ACC, DEF, DMG, and Max HP is reduced by -1. (min. of 1.) This card cannot be discarded."},
+      {name: "This card’s trigger is disabled. Every round, this card reduces the ACC of owner’s card on the field by -1 (min. of 1)"},
+      {name: "This card’s trigger is disabled. If this card isn’t fielded by the end of the owner’s prep phase turn on the next round, this card’s HP is reduced to 0."},
+    ],
+  },
 ];
