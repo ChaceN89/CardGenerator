@@ -122,7 +122,7 @@ export const triggersAndEffects = [
     trigger: "During prep phase, you choose to sacrifice one card in your bench …",
     rarity: "Uncommon",
     effects: [
-      { name: "Until the end of the next combat phase, this card gains a shield that blocks one instance of damage." },
+      { name: "Until the end of the next combat phase, this card gains a shield that halves one instance of damage (rounded down)." },
       { name: "This card permanently gains +1 ACC." },
       { name: "This card gains +1 ACC, +1 DEF, and +1 DMG for one combat phase it's fielded for (Can stack)." },
       { name: "Deal 1 damage to one card on the field." },
@@ -207,7 +207,7 @@ export const triggersAndEffects = [
       {name: "The host card that this attaches to gains +1 ACC, DMG, and max HP until this card is no longer attached."},
       {name: "The first time during every combat phase that the host card would take damage, it’s redirected to this card."},
       {name: "If the host card dies, this card leaps onto a random card on the field aboved 0 HP. You steal whichever card it lands on."},
-      {name: "The host card’s defense is capped at 4, but the host card can no longer be banished, and it can only be damaged by losing fights."},
+      {name: "The first time each round the host card is attacked, it’s redirected to this card."},
       {name: "The host gains a new ability at the end of every round."},
     ],
   },
