@@ -23,7 +23,7 @@ export const triggersAndEffects = [
       { name: "2 HP is restored to your card on the field." },
       { name: "Choose an opponent; one random card on their bench loses -1 Max HP. (Can’t reduce below 1)" },
       { name: "Your card on the field gains +1 ACC and DEF until the end of the next combat round, but so does another random opponent’s fielded card." },
-      { name: "You create a new card for free, and choose an opponent. You both get a copy of the card." },
+	    { name: "You create a new card for free, and choose an opponent. You both get a copy of the card." },
     ],
   },
   {
@@ -34,7 +34,7 @@ export const triggersAndEffects = [
       { name: "The created card permanently gains +1 DEF and +1 Max HP (Up to max. 5 and 4, respectively.)"},
       { name: "You swap the created card’s ability with any other card you own that you choose."},
       { name: "The new card can switch one random stat with that of any fielded card." },
-      { name: "One card you own restores 2 HP." },
+	    { name: "One card you own restores 2 HP." },
       { name: "You gain +1 card reroll." },
     ],
   },
@@ -55,7 +55,7 @@ export const triggersAndEffects = [
     effects: [
       { name: "Deal half of this card’s DMG to one card on the field you choose. (Rounded up, can’t reduce below 1 HP)" },
       { name: "This card attacks a random opponent's card, but gains +2 acc for that fight." },
-      { name: "This card attacks two random opponent’s cards. (Can roll twice into the same target)." },
+	    { name: "This card attacks two random opponent’s cards. (Can roll twice into the same target)." },
       { name: "Choose an opponent. This card attacks a random card they own (Even on the bench)." },
       { name: "This card permanently gains +1 ACC." },
       { name: "This card swaps ownership with another card on the field that you choose." },
@@ -115,7 +115,7 @@ export const triggersAndEffects = [
       { name: "All opponent cards on the field take 1 DMG." },
       { name: "At the start of the next combat phase, disables the ability of one card on the field you choose until the end of the phase)." },
       { name: "Every player must attack this card during the next combat phase, but this card deals DMG to an attacker if it wins the fight." },
-      { name: "This card gains +2 ACC and +1 DMG, but it’s banished at the end of the next combat phase, unless it dies." },
+	    { name: "This card gains +2 ACC and +1 DMG, but it’s banished at the end of the next combat phase, unless it dies." },
     ],
   },
   {
@@ -127,7 +127,7 @@ export const triggersAndEffects = [
       { name: "This card gains +1 ACC, +1 DEF, and +1 DMG for one combat phase it's fielded for (Can stack)." },
       { name: "Deal 1 damage to one card on the field." },
       { name: "Choose up to 3 opponents. They must also each sacrifice a card on their bench." },
-    { name: "The sacrificed card is returned to your hand with full HP in 3 rounds at the start of your turn, gaining +1 to all stats. You have -1 bench slots until then." },
+	    { name: "The sacrificed card is returned to your hand with full HP in 3 rounds at the start of your turn, gaining +1 to all stats. You have -1 bench slots until then." },
     ],
   },
   {
@@ -161,7 +161,7 @@ export const triggersAndEffects = [
       { name: "Deal 1 damage to one card on the field." },
       { name: "All your cards are fully healed." },
       { name: "If you sacrifice another card with the exact same trigger and effect, you immediately create a new card, but its stats are 6 ATK, 6 DEF, 5 DMG, and 5 HP." },
-    { name: "Choose an opponent. You both can choose for your fielded card to permanently gain either +1 ACC and DMG or +3 ACC and +2 DMG, but if both of you choose the latter, both your cards instead lose -1 ACC and DMG." },
+	    { name: "Choose an opponent. You both can choose for your fielded card to permanently gain either +1 ACC and DMG or +3 ACC and +2 DMG, but if both of you choose the latter, both your cards instead lose -1 ACC and DMG." },
     ],
   },
   {
@@ -174,7 +174,7 @@ export const triggersAndEffects = [
       { name: "You restore 1 LP." },
       { name: "Clone any card that any player owns, which goes to your bench." },
       { name: "This card gains a crown and can no longer be banished; all of its stats are increased by +1." },
-    { name: "Choose one card in the graveyard that you owned and revive it in a fresh state, returning them to your bench." },
+	  { name: "Choose one card in the graveyard that you owned and revive it in a fresh state, returning them to your bench." },
     ],
   },
   {
@@ -185,7 +185,7 @@ export const triggersAndEffects = [
       { name: "Deal 2 damage to every opponent’s card on the field." },
       { name: "You steal 1 card from up to 2 player's benches." },
       { name: "You banish half of the cards in every player’s bench (rounded up) of your choice." },
-      { name: "Every player’s bench is switched around and given to their adjacent opponent clockwise from them." },
+	    { name: "Every player’s bench is switched around and given to their adjacent opponent clockwise from them." },
       { name: "Choose ANY card in the graveyard and revive it in the last state it was in with full HP, adding it to your bench." },
     ],
   },
