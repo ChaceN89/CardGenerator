@@ -19,9 +19,9 @@ export class Card {
 
 // Initial values for context
 const initialGlobalCardStats = {
-  healthRange: [2, 5],
+  healthRange: [1, 4],
   damageRange: [1, 4],
-  defenceRange: [2, 4],
+  defenceRange: [1, 5],
   accuracyRange: [1, 5],
   distributionPoints: 12
 };

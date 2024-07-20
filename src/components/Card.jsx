@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { FaBullseye, FaShieldAlt, FaHeart } from 'react-icons/fa';
 import { LuSword } from 'react-icons/lu';
 import Button from './Button';
@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 
 const Card = ({ card }) => {
   const cardRef = useRef();
+  const [hideStats, setHideStats] = useState(false);
 
   const getBorderColor = (rarity) => {
     switch (rarity) {
@@ -87,15 +88,7 @@ const Card = ({ card }) => {
   };
 
   const copyCardImageToClipboard = () => {
-    const originalStats = cardRef.current.querySelectorAll('.card-stats');
-    const originalStatsContent = Array.from(originalStats).map(stat => stat.innerHTML);
-  
-    // Set stats content to blank
-    originalStats.forEach(stat => {
-      stat.innerHTML = '&nbsp;&nbsp;&nbsp;<br/>';
-    });
-  
-    // Generate the PNG and copy to clipboard
+    setHideStats(true);
     toPng(cardRef.current)
       .then((dataUrl) => {
         fetch(dataUrl)
@@ -112,14 +105,9 @@ const Card = ({ card }) => {
           });
       })
       .finally(() => {
-        // Restore the original stats content
-        originalStats.forEach((stat, index) => {
-          stat.innerHTML = originalStatsContent[index];
-        });
+        setHideStats(false);
       });
   };
-  
-  
 
   return (
     <div className="flex flex-col items-center">
@@ -145,7 +133,7 @@ const Card = ({ card }) => {
             className="mb-4 mx-auto h-44 w-full object-contain"
           />
         )}
-        <div className="flex justify-around items-center mb-2 text-xl card-stats">
+        <div className={`flex justify-around items-center mb-2 text-xl card-stats ${hideStats ? 'hidden' : ''}`}>
           <div className="flex items-center">
             <FaBullseye className="mr-0.5 text-red-500" /> {card.AccuracyPoints}
           </div>
@@ -160,7 +148,7 @@ const Card = ({ card }) => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-around items-center mb-2 text-xl">
+        <div className={`flex flex-col justify-around items-center mb-2 text-xl ${hideStats ? 'hidden' : ''}`}>
           <div>
             <p className="mb-1 text-sm card-stats">
               <strong>If:</strong> {card.Trigger}
